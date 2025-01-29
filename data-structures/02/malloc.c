@@ -31,5 +31,11 @@ int mallocFunction2() {
     wH->height = 73;
     wH->weight = 200;
 
+    if (wH->height > maxHeight) {
+        printf("Height is greater than %d\n", maxHeight);
+    } else {
+        printf("Height is less than %d\n", maxHeight);
+    }    
+
     return 0;
 }
