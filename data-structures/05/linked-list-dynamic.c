@@ -4,8 +4,6 @@
 
 // A instância tem um ponteiro para o primeiro elemento da lista
 // Cada elemento indica seu sucessor
-
-typedef int bool;
 typedef int KeyType;
 
 typedef struct {
@@ -27,7 +25,7 @@ void initialize(LinkedList* list) {
     list->start = NULL;
 }
 
-void getListSize(LinkedList* list) {
+int getListSize(LinkedList* list) {
     Pointer end = list->start;
     int size = 0;
     
@@ -38,7 +36,19 @@ void getListSize(LinkedList* list) {
     return size;
 }
 
-int printList(LinkedList* list) {
+// void printList(LinkedList* list) {
+//     Pointer end = list->start;
+    
+//     printf("List: \" ");
+//     while(end != NULL) {
+//         printf("%i ", end->reg.key);
+//         end = end->nextElement;
+//     }
+//     printf("\"\n");
+// }
+
+
+void printList(LinkedList* list) {
     Pointer end = list->start;
     
     printf("List: \" ");
@@ -53,7 +63,7 @@ Pointer searchElement(LinkedList* list, KeyType targetKey) {
     Pointer next = list->start;
 
     while(next != NULL && next->reg.key < targetKey) {
-        next->nextElement;
+        next = next->nextElement;
     }
     if (next != NULL && next->reg.key == targetKey) return next;
     
@@ -97,7 +107,7 @@ bool removeElement(LinkedList* list, KeyType key) {
     Pointer previous, i;
     i = sequentialExcSearch(list, key, &previous);
 
-    if (i == NULL) return NULL;
+    if (i == NULL) return false;
     if (previous == NULL) list->start = i->nextElement;
     else previous->nextElement = i->nextElement;
 
@@ -105,7 +115,7 @@ bool removeElement(LinkedList* list, KeyType key) {
     return true;
 }
 
-void cleanList(LinkedList* list) {
+void clearList(LinkedList* list) {
     Pointer end = list->start;
 
     while (end != NULL) {
@@ -114,4 +124,35 @@ void cleanList(LinkedList* list) {
         free(current);
     }
     list->start = NULL;
+}
+
+int main() {
+    LinkedList list;
+    initialize(&list);
+
+    Register reg1 = {10};
+    Register reg2 = {20};
+    Register reg3 = {30};
+
+    
+    insertionOrdered(&list, reg1);
+    insertionOrdered(&list, reg2);
+    insertionOrdered(&list, reg3);
+
+    printList(&list);
+
+    Pointer found = searchElement(&list, 20);
+    if (found != NULL) {
+        printf("Element 20 found!\n");
+    }
+
+    removeElement(&list, 20);
+
+    printList(&list);
+
+    clearList(&list);
+
+    printList(&list);
+
+    return 0;
 }
