@@ -1,15 +1,25 @@
 #include <stdio.h>
 
-int pointers() {
-    int x = 25; // aloca memoria para x e atribui 25 a ele
+void pointers()
+{
+    int x = 25; // Declara a variável x e atribui 25 a ela
 
-    // int* indica que o valor de y será uma referencia/endereço de memória
-    // &x retorna o endereço de x
-    int* y = &x; // aloca memoria para y e atribui o endereco de x a ele
-    
-    // *y indica que o valor de y é uma referencia/endereço de memória
-    // então *y acessa o valor de x (25) e atribui 30 a ele
-    *y = 30; // atribui 30 ao valor de x
+    // int* indica que y é um ponteiro para um inteiro
+    // &x retorna o endereço de memória de x, que é armazenado em y
+    int *y = &x;
 
+    // *y acessa o valor armazenado no endereço apontado por y (ou seja, x)
+    // Portanto, essa linha modifica x para 30
+    *y = 30;
+
+    // Exibe os valores para verificação
+    printf("Valor de x: %d\n", x);
+    printf("Valor de *y: %d\n", *y);
+}
+
+int main()
+{
+    printf("Testando a função pointers():\n");
+    pointers();
     return 0;
 }
