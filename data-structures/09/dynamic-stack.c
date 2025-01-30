@@ -31,7 +31,7 @@ void initialize(Stack* stack) {
 
 int stackSize(Stack* stack) {
     Pointer end = stack->top;
-    int size;
+    int size = 0;
 
     while(end != NULL) {
         size++;
@@ -45,15 +45,14 @@ void printStack(Stack* stack) {
 
     printf("Stack: \" ");
     while (end != NULL) {
-        printf("%i ", end);
+        printf("%i ", end->reg.key);
         end = end->nextElement;
     }
     printf("\"\n");
 }
 
 bool isEmpty(Stack* stack) {
-    if (stack->top == NULL) return true;
-    return false;
+    return (stack->top == NULL);
 }
 
 bool push(Stack* stack, Register newElement) {
@@ -83,4 +82,32 @@ void clearStack(Stack* stack) {
         free(target);
     }
     stack->top = NULL;
+}
+
+int main() {
+    Stack stack;
+    initialize(&stack);
+
+    Register reg1 = {10};
+    Register reg2 = {20};
+    Register reg3 = {30};
+
+    push(&stack, reg1);
+    push(&stack, reg2);
+    push(&stack, reg3);
+
+    printStack(&stack);
+
+    Register poppedReg;
+    if (pop(&stack, &poppedReg)) {
+        printf("Popped: %i\n", poppedReg.key);
+    }
+
+    printStack(&stack);
+
+    clearStack(&stack);
+
+    printStack(&stack);
+
+    return 0;
 }
