@@ -83,7 +83,7 @@ Pointer sequentialExcSearch(List* list, KeyType targetKey, Pointer* previous) {
     return NULL;    
 }
 
-Pointer insertionOrdered(List* list, Register newElement) {
+bool insertionOrdered(List* list, Register newElement) {
     Pointer previous, i;
     i = sequentialExcSearch(list, newElement.key, &previous);
 
@@ -95,7 +95,7 @@ Pointer insertionOrdered(List* list, Register newElement) {
     return true;
 }
 
-Pointer removeElement(List* list, KeyType targetKey) {
+bool removeElement(List* list, KeyType targetKey) {
     Pointer previous, i;
     i = sequentialExcSearch(list, targetKey, &previous);
 
@@ -116,4 +116,38 @@ void clearList(List* list) {
     }
 
     list->head->nextElement = list->head;
+}
+
+int main() {
+    List list;
+    initialize(&list);
+
+    Register reg1 = {10};
+    Register reg2 = {20};
+    Register reg3 = {30};
+    Register reg4 = {40};
+    Register reg5 = {50};
+
+    insertionOrdered(&list, reg2);
+    insertionOrdered(&list, reg1);
+    insertionOrdered(&list, reg3);
+    insertionOrdered(&list, reg4);
+    insertionOrdered(&list, reg5);
+
+    printList(&list);
+
+    Pointer found = sentinelSearch(&list, 20);
+    if (found != NULL) {
+        printf("Element 20 found!\n");
+    }
+
+    removeElement(&list, 20);
+
+    printList(&list);
+
+    clearList(&list);
+
+    printList(&list);
+
+    return 0;
 }
