@@ -1,4 +1,7 @@
-typedef struct {
+#include <stdio.h>
+
+typedef struct
+{
     float weight;
     float height;
     int age;
@@ -11,7 +14,8 @@ struct Car
     int year;
 };
 
-int structs() {
+int structs()
+{
     WeightHeightAge weightHeightAge;
     weightHeightAge.weight = 70.5;
     weightHeightAge.height = 1.75;
@@ -23,5 +27,12 @@ int structs() {
 
     printf("Weight: %f, Height: %f\n, Age: %i", weightHeightAge.weight, weightHeightAge.height, weightHeightAge.age);
 
+    return 0;
+}
+
+int main()
+{
+    printf("Testando a função structs():\n");
+    structs();
     return 0;
 }
