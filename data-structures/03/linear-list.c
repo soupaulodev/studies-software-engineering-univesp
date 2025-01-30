@@ -49,15 +49,17 @@ int sequentialSearch(SequentialList* list, KeyType targetKey) {
 
 // Realiza uma busca com sentinela na lista
 int sentinelSearch(SequentialList* list, KeyType targetKey) {
+    if (list->numberOfElements >= MAX_SIZE) return -1;  // Verifica se há espaço para a sentinela
+
     int i = 0;
-    list->elements[list->numberOfElements].key = targetKey; // Adiciona a sentinela
+    list->elements[list->numberOfElements].key = targetKey;  // Adiciona a sentinela
     while (list->elements[i].key != targetKey) {
         i++;
     }
     if (i == list->numberOfElements) {
-        return -1;
+        return -1;  // Elemento não encontrado
     }
-    else return i; // Retorna -1 se o elemento não for encontrado
+    return i;  // Retorna a posição do elemento encontrado
 }
 
 // Realiza uma busca binária na lista
@@ -66,7 +68,7 @@ int binarySearch(SequentialList* list, KeyType k) {
     int rt = list->numberOfElements - 1;
     
     while(lt <= rt) {
-        int mid = lt + ((rt - lt) >> 2); // Uso de deslocamento para divisão por 2
+        int mid = lt + ((rt - lt) >> 1); // Uso de deslocamento por 1 para divisão por 2
 
         if (list->elements[mid].key == k) return mid;
         if (list->elements[mid].key < k) lt = mid + 1;
@@ -135,10 +137,6 @@ void clearList(SequentialList* list) {
     list->numberOfElements = 0;
 }
 
-typedef struct {
-    SequentialList* list
-} mat;
-
 int main() {
     // Declaração de uma lista linear sequencial
     SequentialList list;
@@ -147,8 +145,8 @@ int main() {
     // Exemplo de uso das funções
     Register reg1 = {10};
     Register reg2 = {20};
-    addElement(&list, reg1, 0);
-    addElement(&list, reg2, 1);
+    insertElement(&list, reg1, 0);
+    insertElement(&list, reg2, 1);
 
     printList(&list);
 
