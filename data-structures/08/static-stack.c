@@ -1,10 +1,9 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 // Pilha/Stack é uma estrutura linear LIFO
 
 #define MAX_SIZE 50
-#define true 1
-#define false 0
 
 typedef int KeyType;
 
@@ -33,20 +32,48 @@ void printStack(Stack* stack) {
     printf("\"\n");
 } 
 
-void push(Stack* stack, Register newElement) {
-    if (stack->top >= MAX_SIZE-1) return false;
+bool push(Stack* stack, Register newElement) {
+    if (stack->top >= MAX_SIZE - 1) return false;
     stack->top = stack->top+1;
     stack->element[stack->top] = newElement;
     return true;
 }
 
-void pop(Stack* stack, Register* reg) {
+bool pop(Stack* stack, Register* reg) {
     if(stack->top == -1) return false;
     *reg = stack->element[stack->top];
     stack->top = stack->top-1;
     return true;
 }
 
-void cleanStack(Stack* stack) {
+void clearStack(Stack* stack) {
     stack->top = -1;
+}
+
+int main() {
+    Stack stack;
+    initialize(&stack);
+
+    Register reg1 = {10};
+    Register reg2 = {20};
+    Register reg3 = {30};
+
+    push(&stack, reg1);
+    push(&stack, reg2);
+    push(&stack, reg3);
+
+    printStack(&stack);
+
+    Register poppedReg;
+    if (pop(&stack, &poppedReg)) {
+        printf("Popped: %i\n", poppedReg.key);
+    }
+
+    printStack(&stack);
+
+    clearStack(&stack);
+
+    printStack(&stack);
+
+    return 0;
 }
